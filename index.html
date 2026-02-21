@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club Nova Volley — Santiago Centro</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <a href="#" class="nav-logo">NOVA<span>VOLLEY</span></a>
+  <ul class="nav-links">
+    <li><a href="#categorias">Clases</a></li>
+    <li><a href="#horarios">Horarios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#informaciones">Noticias</a></li>
+    <li><a href="#promo">Prueba Gratis</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#inscripcion" class="nav-btn">INSCRÍBETE</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menú">☰</button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-close" id="mobile-menu-close">✕</button>
+  <ul>
+    <li><a href="#categorias" class="mobile-link">Clases</a></li>
+    <li><a href="#horarios" class="mobile-link">Horarios</a></li>
+    <li><a href="#nosotros" class="mobile-link">Nosotros</a></li>
+    <li><a href="#informaciones" class="mobile-link">Noticias</a></li>
+    <li><a href="#promo" class="mobile-link">Prueba Gratis</a></li>
+    <li><a href="#contacto" class="mobile-link">Contacto</a></li>
+    <li><a href="#inscripcion" class="mobile-link cta">INSCRÍBETE</a></li>
+  </ul>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <span class="hero-tag">⬡ Santiago Centro · San Isidro 886</span>
+    <h1 class="hero-title">
+      CLUB<br>
+      NOVA<span class="highlight">VOLLEY</span>
+    </h1>
+    <p class="hero-sub">
+      Clases para Damas · Varones · Escuela<br>
+      Santiago Centro · Todos los niveles
+    </p>
+    <div class="hero-ctas">
+      <a href="#promo" class="hero-cta">CLASE DE PRUEBA GRATIS →</a>
+      <a href="#inscripcion" class="hero-cta-secondary">INSCRIBIRSE</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="hero-badge-inner">
+      <span style="font-family:'Anton',sans-serif;font-size:0.7rem;color:var(--carbon);text-transform:uppercase;letter-spacing:0.1em;text-align:center;line-height:1.2;">TEMPORADA<br>2026</span>
+      <span style="font-family:'Anton',sans-serif;font-size:1.8rem;color:var(--carbon);">⬡</span>
+      <span style="font-family:'Space Mono',monospace;font-size:0.5rem;color:var(--carbon);text-transform:uppercase;letter-spacing:0.15em;">INSCRIPCIONES</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">CLUB NOVA VOLLEY</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">CLASE DE PRUEBA GRATIS</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">SANTIAGO CENTRO</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">DAMAS · VARONES · ESCUELA</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">SAN ISIDRO 886</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">ESTACIONAMIENTO DISPONIBLE</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">CLUB NOVA VOLLEY</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">CLASE DE PRUEBA GRATIS</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">SANTIAGO CENTRO</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">DAMAS · VARONES · ESCUELA</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">SAN ISIDRO 886</span>
+    <span class="ticker-item ticker-dot">✦</span>
+    <span class="ticker-item">ESTACIONAMIENTO DISPONIBLE</span>
+    <span class="ticker-item ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- ── CATEGORÍAS ── -->
+<section id="categorias">
+  <p class="section-label">// 01 — Categorías</p>
+  <h2 class="section-title">NUESTRAS<br>CLASES</h2>
+  <div class="shuffle-layout">
+    <div class="cat-list" id="cat-list">
+      <div class="cat-item active" data-cat="damas">DAMAS</div>
+      <div class="cat-item" data-cat="varones">VARONES</div>
+      <div class="cat-item" data-cat="escuela">ESCUELA</div>
+    </div>
+    <div class="photo-stack-wrap" id="photo-stack">
+      <div class="photo-card front" data-cat="damas" data-pos="2">
+        <img src="https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=600&auto=format&fit=crop&q=80" alt="Damas Voleibol" loading="lazy" />
+        <span class="card-label">DAMAS</span>
+      </div>
+      <div class="photo-card back-1" data-cat="varones" data-pos="0">
+        <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&auto=format&fit=crop&q=80" alt="Varones Voleibol" loading="lazy" />
+        <span class="card-label">VARONES</span>
+      </div>
+      <div class="photo-card back-2" data-cat="escuela" data-pos="1">
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&auto=format&fit=crop&q=80" alt="Escuela Voleibol" loading="lazy" />
+        <span class="card-label">ESCUELA</span>
+      </div>
+    </div>
+    <div class="cat-info-panel" id="cat-info">
+      <div class="cat-info-title" id="info-title">DAMAS</div>
+      <p class="cat-info-text" id="info-text">Voleibol femenino de alta energía. Entrenamientos técnicos y tácticos para todos los niveles. Desarrolla tus habilidades en un ambiente motivador y competitivo.</p>
+      <span class="cat-horario" id="info-horario">MAR &amp; JUE — 18:00 a 19:30</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── HORARIOS ── -->
+<section id="horarios">
+  <p class="section-label">// 02 — Horarios</p>
+  <h2 class="section-title">PROGRAMA<br>SEMANAL</h2>
+  <div class="schedule-grid">
+    <div class="schedule-card">
+      <div class="card-accent" style="background: var(--orange);"></div>
+      <span class="card-num">01</span>
+      <div class="card-title">Damas</div>
+      <div class="card-days">Martes y Jueves</div>
+      <div class="card-time">18:00 — 19:30</div>
+      <span class="card-tag">⬡ Nivel mixto</span>
+    </div>
+    <div class="schedule-card">
+      <div class="card-accent" style="background: var(--mustard);"></div>
+      <span class="card-num">02</span>
+      <div class="card-title">Adultos</div>
+      <div class="card-days">Lunes a Jueves</div>
+      <div class="card-time">19:30 — 21:00</div>
+      <span class="card-tag">⬡ Todos los niveles</span>
+    </div>
+    <div class="schedule-card">
+      <div class="card-accent" style="background: var(--carbon);"></div>
+      <span class="card-num">03</span>
+      <div class="card-title">Escuela</div>
+      <div class="card-days">Consultar disponibilidad</div>
+      <div class="card-time">NIÑAS &amp; NIÑOS</div>
+      <span class="card-tag">⬡ Desde 8 años</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── NOSOTROS ── -->
+<section id="nosotros">
+  <p class="section-label">// 03 — Nosotros</p>
+  <div class="nosotros-layout">
+    <div class="nosotros-left">
+      <h2 class="section-title nosotros-title">SOMOS<br>NOVA<span class="text-orange">VOLLEY</span></h2>
+      <p class="nosotros-lead">Más que un club. Una comunidad que vive el voleibol desde adentro.</p>
+    </div>
+    <div class="nosotros-right">
+      <div class="nosotros-text">
+        <p>Fundado en Santiago Centro, Club Nova Volley nació de la pasión por el voleibol y la convicción de que este deporte transforma vidas. Desde nuestras canchas en San Isidro 886, entrenamos a deportistas de todas las edades y niveles con metodología profesional.</p>
+        <p>Nuestros entrenadores certificados diseñan programas personalizados para cada categoría — porque cada jugador tiene su propio ritmo y su propio potencial.</p>
+      </div>
+      <div class="nosotros-stats">
+        <div class="stat-item">
+          <span class="stat-num">200+</span>
+          <span class="stat-label">Deportistas<br>activos</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-label">Canchas<br>profesionales</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">8+</span>
+          <span class="stat-label">Años de<br>historia</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Compromiso<br>contigo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── INFORMACIONES (Feed dinámico) ── -->
+<section id="informaciones">
+  <p class="section-label">// 04 — Noticias &amp; Anuncios</p>
+  <h2 class="section-title">ÚLTIMAS<br>NOTICIAS</h2>
+  <div class="news-grid" id="news-grid">
+    <!-- Feed cargado desde Supabase -->
+    <div class="news-loading">
+      <div class="news-spinner"></div>
+      <span>Cargando noticias…</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROMO ── -->
+<section id="promo">
+  <div class="promo-inner">
+    <div class="promo-stamp">
+      <div class="stamp-top">oferta</div>
+      <div class="stamp-main">PRUEBA<br>GRATIS</div>
+      <div class="stamp-top">primera clase</div>
+    </div>
+    <div class="promo-text">
+      <h2>APP DAYS<br>NOVA VOLLEY</h2>
+      <p>Ven a conocer nuestras canchas y entrenadores.<br>Tu primera clase es completamente gratis. Sin compromisos.</p>
+      <div class="promo-pills">
+        <span class="promo-pill">🏐 1ª CLASE GRATIS</span>
+        <span class="promo-pill inv">🅿️ ESTACIONAMIENTO</span>
+        <span class="promo-pill">📍 SAN ISIDRO 886</span>
+      </div>
+    </div>
+    <a href="https://wa.me/56900000000?text=Hola%2C%20quiero%20agendar%20mi%20clase%20de%20prueba%20en%20Club%20Nova%20Volley" class="promo-cta" target="_blank">
+      AGENDAR CLASE →
+    </a>
+  </div>
+</section>
+
+<!-- ── INSCRIPCIÓN ── -->
+<section id="inscripcion">
+  <p class="section-label">// 05 — Inscripciones</p>
+  <h2 class="section-title">ÚNETE AL<br>CLUB</h2>
+  <div class="form-layout">
+    <div class="form-intro">
+      <p class="form-intro-text">Completa el formulario y uno de nuestros entrenadores te contactará para confirmar tu inscripción.</p>
+      <div class="form-badges">
+        <span class="form-badge">🏐 Todos los niveles</span>
+        <span class="form-badge">📅 Inicio inmediato</span>
+        <span class="form-badge">✅ Sin contrato</span>
+      </div>
+    </div>
+    <form class="registro-form" id="registro-form" novalidate>
+      <div class="form-section-title">DATOS DEL DEPORTISTA</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre completo *</label>
+          <input type="text" class="form-input" name="nombre" placeholder="Juan García" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha de nacimiento *</label>
+          <input type="date" class="form-input" name="fecha_nac" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Género *</label>
+          <select class="form-input form-select" name="genero" required>
+            <option value="">Seleccionar…</option>
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+            <option value="otro">Otro / Prefiero no decir</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoría *</label>
+          <select class="form-input form-select" name="categoria" required>
+            <option value="">Seleccionar categoría…</option>
+            <option value="damas">Damas (Martes y Jueves 18:00)</option>
+            <option value="adultos">Adultos (Lun–Jue 19:30)</option>
+            <option value="escuela">Escuela (desde 8 años)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sección Apoderado (condicional si es menor) -->
+      <div class="form-section-title apoderado-section" id="apoderado-section" style="display:none;">
+        CONTACTO DEL APODERADO
+        <span class="form-section-note">(Requerido para menores de 18 años)</span>
+      </div>
+      <div class="apoderado-fields" id="apoderado-fields" style="display:none;">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nombre del apoderado *</label>
+            <input type="text" class="form-input" name="apoderado_nombre" placeholder="María García">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teléfono del apoderado *</label>
+            <input type="tel" class="form-input" name="apoderado_telefono" placeholder="+56 9 8765 4321">
+          </div>
+        </div>
+      </div>
+      <div class="form-submit-wrap">
+        <button type="submit" class="form-submit" id="form-submit-btn">
+          <span id="form-submit-text">ENVIAR INSCRIPCIÓN →</span>
+        </button>
+        <p class="form-disclaimer">Al enviar, aceptas que Nova Volley contacte al correo o teléfono indicado para confirmar tu inscripción.</p>
+      </div>
+      <div class="form-success" id="form-success" style="display:none;">
+        <span class="form-success-icon">✓</span>
+        <div>
+          <strong>¡Inscripción recibida!</strong><br>
+          Te contactaremos en las próximas 24 horas para confirmar tu cupo.
+        </div>
+      </div>
+      <div class="form-error" id="form-error" style="display:none;">
+        <span>⚠ Error al enviar. Intenta nuevamente o contáctanos por WhatsApp.</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── CONTACTO ── -->
+<section id="contacto">
+  <p class="section-label">// 06 — Contacto</p>
+  <h2 class="section-title">ESCRÍBENOS</h2>
+  <div class="contacto-layout">
+    <div class="contacto-info">
+      <div class="contacto-item">
+        <span class="contacto-icon">📍</span>
+        <div>
+          <strong>Dirección</strong>
+          <span>San Isidro 886, Santiago Centro</span>
+        </div>
+      </div>
+      <div class="contacto-item">
+        <span class="contacto-icon">🕐</span>
+        <div>
+          <strong>Horarios</strong>
+          <span>Lun–Jue: 17:00–21:30</span>
+        </div>
+      </div>
+      <div class="contacto-item">
+        <span class="contacto-icon">💬</span>
+        <div>
+          <strong>WhatsApp</strong>
+          <a href="https://wa.me/56900000000" target="_blank" class="contacto-link">+56 9 0000 0000</a>
+        </div>
+      </div>
+      <div class="contacto-item">
+        <span class="contacto-icon">🅿️</span>
+        <div>
+          <strong>Estacionamiento</strong>
+          <span>Disponible en el lugar</span>
+        </div>
+      </div>
+    </div>
+    <form class="contacto-form" id="contacto-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre *</label>
+          <input type="text" class="form-input" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-input" name="email" placeholder="tucorreo@email.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mensaje *</label>
+        <textarea class="form-input form-textarea" name="mensaje" placeholder="¿En qué podemos ayudarte?" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">ENVIAR MENSAJE →</button>
+      <div class="form-success" id="contacto-success" style="display:none;">
+        <span class="form-success-icon">✓</span>
+        <div><strong>¡Mensaje enviado!</strong><br>Te responderemos pronto.</div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <div class="logo">NOVA<span>VOLLEY</span></div>
+    <div style="font-family:'Space Mono',monospace;font-size:0.65rem;color:#6B7280;margin-top:6px;letter-spacing:0.05em;">Club de voleibol · Santiago Centro</div>
+  </div>
+  <div class="address">
+    <strong>Dirección</strong>
+    San Isidro 886, Santiago Centro<br>
+    Región Metropolitana, Chile
+  </div>
+  <div class="address">
+    <strong>Horarios de atención</strong>
+    Lun – Jue: 17:00 – 21:30<br>
+    Consultas por WhatsApp
+  </div>
+  <div>
+    <a href="admin.html" class="admin-link">⚙ Panel Admin</a>
+    <div style="font-family:'Anton',sans-serif;font-size:0.9rem;color:#374151;text-transform:uppercase;letter-spacing:0.05em;margin-top:8px;">© 2026 Nova Volley</div>
+  </div>
+</footer>
+
+<!-- ── CHATBOT FLOTANTE ── -->
+<div class="chat-widget" id="chat-widget">
+  <div class="chat-bubble" id="chat-bubble" title="Chatear con Nova">
+    <span class="chat-bubble-icon">🏐</span>
+    <span class="chat-notification" id="chat-notification">1</span>
+  </div>
+  <div class="chat-window" id="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">🏐</div>
+        <div>
+          <div class="chat-header-name">Nova Bot</div>
+          <div class="chat-header-sub">Club Nova Volley · En línea</div>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <!-- mensajes renderizados por JS -->
+    </div>
+    <div class="chat-quick-replies" id="chat-quick-replies">
+      <button class="quick-reply" data-q="horarios">⏰ Horarios</button>
+      <button class="quick-reply" data-q="precio">💰 Precios</button>
+      <button class="quick-reply" data-q="prueba">🎯 Clase gratis</button>
+      <button class="quick-reply" data-q="ubicacion">📍 Dónde están</button>
+    </div>
+    <div class="chat-input-wrap">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Escribe tu consulta…" autocomplete="off">
+      <button class="chat-send" id="chat-send">→</button>
+    </div>
+    <div class="chat-footer-actions">
+      <a href="https://wa.me/56900000000?text=Hola%2C%20necesito%20hablar%20con%20alguien%20de%20Nova%20Volley" target="_blank" class="chat-human-btn">👤 Hablar con persona</a>
+      <a href="#contacto" class="chat-human-btn" id="chat-goto-form">📋 Formulario</a>
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
