@@ -117,6 +117,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
   box-shadow: 4px 4px 0 var(--mustard); margin-top: 1.5rem;
 }
 .panel-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--mustard); }
+.panel-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .panel-btn-secondary {
   background: transparent; color: var(--kraft); font-family: 'Anton', sans-serif;
   font-size: 1rem; padding: 8px 20px; border: 2px solid #4B5563; cursor: pointer;
@@ -124,7 +125,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
 }
 .panel-btn-secondary:hover { border-color: var(--mustard); color: var(--mustard); }
 .panel-success { display: none; background: rgba(34,197,94,0.1); border: 2px solid #22C55E; color: #4ADE80; font-size: 0.8rem; padding: 10px 16px; margin-top: 1rem; }
-.panel-error { display: none; background: rgba(239,68,68,0.1); border: 2px solid var(--orange); color: #FCA5A5; font-size: 0.8rem; padding: 10px 16px; margin-top: 1rem; }
+.panel-error   { display: none; background: rgba(239,68,68,0.1); border: 2px solid var(--orange); color: #FCA5A5; font-size: 0.8rem; padding: 10px 16px; margin-top: 1rem; }
 
 /* Table */
 .panel-table-wrap { overflow-x: auto; }
@@ -135,21 +136,31 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
 .tag-badge { display: inline-block; font-size: 0.6rem; padding: 3px 8px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
 .tag-general { background: rgba(250,204,21,0.15); color: var(--mustard); }
 .tag-urgente { background: rgba(239,68,68,0.15); color: #FCA5A5; }
-.tag-evento { background: rgba(99,102,241,0.15); color: #A5B4FC; }
+.tag-evento  { background: rgba(99,102,241,0.15); color: #A5B4FC; }
 .btn-delete { background: transparent; color: #6B7280; border: 1px solid #374151; padding: 4px 10px; cursor: pointer; font-size: 0.65rem; font-family: 'Space Mono', monospace; transition: color 0.2s, border-color 0.2s; }
 .btn-delete:hover { color: var(--orange); border-color: var(--orange); }
-.table-empty { text-align: center; color: #4B5563; padding: 3rem; font-size: 0.8rem; }
+.table-empty   { text-align: center; color: #4B5563; padding: 3rem; font-size: 0.8rem; }
 .table-loading { text-align: center; color: #4B5563; padding: 2rem; }
 
 /* Inscritos */
 .stats-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .stat-card { background: #1a2535; border: 2px solid #374151; padding: 1rem 1.5rem; flex: 1; min-width: 150px; }
-.stat-card-num { font-family: 'Anton', sans-serif; font-size: 2.5rem; color: var(--orange); line-height: 1; }
+.stat-card-num   { font-family: 'Anton', sans-serif; font-size: 2.5rem; color: var(--orange); line-height: 1; }
 .stat-card-label { font-size: 0.65rem; color: #6B7280; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
 .export-btn { background: #374151; color: var(--kraft); font-family: 'Space Mono', monospace; font-size: 0.7rem; padding: 8px 18px; border: none; cursor: pointer; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.2s; margin-bottom: 1rem; }
 .export-btn:hover { background: var(--orange); }
 
-/* Scroll */
+/* Supabase config indicator */
+.config-warning {
+  background: rgba(250,204,21,0.1);
+  border: 2px solid var(--mustard);
+  color: var(--mustard);
+  font-size: 0.75rem;
+  padding: 10px 16px;
+  margin-bottom: 1.5rem;
+  display: none;
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--dark); }
 ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
@@ -179,6 +190,12 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
     </div>
   </nav>
   <div class="admin-body">
+
+    <!-- Aviso de configuración pendiente -->
+    <div class="config-warning" id="config-warning">
+      ⚠ Supabase no está configurado. Edita las variables <code>SUPABASE_URL</code> y <code>SUPABASE_ANON_KEY</code> en la parte superior del script de este archivo y de <code>scripts.js</code>.
+    </div>
+
     <div class="admin-tabs">
       <div class="admin-tab active" data-tab="noticias">Noticias</div>
       <div class="admin-tab" data-tab="inscritos">Inscritos</div>
@@ -210,7 +227,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
           <button class="panel-btn-secondary" id="btn-limpiar-noticia">Limpiar</button>
         </div>
         <div class="panel-success" id="noticia-success">✓ Noticia publicada correctamente.</div>
-        <div class="panel-error" id="noticia-error">⚠ Error al publicar. Revisa la conexión con Supabase.</div>
+        <div class="panel-error"   id="noticia-error"></div>
       </div>
 
       <h3 style="font-family:'Anton',sans-serif;font-size:1.3rem;text-transform:uppercase;color:#9CA3AF;margin-bottom:1rem;letter-spacing:0.05em;">NOTICIAS PUBLICADAS</h3>
@@ -218,11 +235,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
         <table class="panel-table">
           <thead>
             <tr>
-              <th>Título</th>
-              <th>Tipo</th>
-              <th>Contenido</th>
-              <th>Fecha</th>
-              <th>Acción</th>
+              <th>Título</th><th>Tipo</th><th>Contenido</th><th>Fecha</th><th>Acción</th>
             </tr>
           </thead>
           <tbody id="noticias-tbody">
@@ -235,7 +248,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
     <!-- TAB: INSCRITOS -->
     <div class="admin-section" id="tab-inscritos">
       <h2 class="panel-title">LISTADO DE <span>INSCRITOS</span></h2>
-      <div class="stats-bar" id="inscritos-stats">
+      <div class="stats-bar">
         <div class="stat-card"><div class="stat-card-num" id="stat-total">—</div><div class="stat-card-label">Total inscritos</div></div>
         <div class="stat-card"><div class="stat-card-num" id="stat-damas">—</div><div class="stat-card-label">Damas</div></div>
         <div class="stat-card"><div class="stat-card-num" id="stat-adultos">—</div><div class="stat-card-label">Adultos</div></div>
@@ -246,13 +259,8 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
         <table class="panel-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Apoderado</th>
-              <th>Tel. Apoderado</th>
-              <th>Categoría</th>
-              <th>Nac.</th>
-              <th>Género</th>
-              <th>Fecha inscripción</th>
+              <th>Nombre</th><th>Apoderado</th><th>Tel. Apoderado</th>
+              <th>Categoría</th><th>Nac.</th><th>Género</th><th>Fecha inscripción</th>
             </tr>
           </thead>
           <tbody id="inscritos-tbody">
@@ -269,11 +277,7 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
         <table class="panel-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>Mensaje</th>
-              <th>Fecha</th>
-              <th>Acción</th>
+              <th>Nombre</th><th>Email</th><th>Mensaje</th><th>Fecha</th><th>Acción</th>
             </tr>
           </thead>
           <tbody id="mensajes-tbody">
@@ -288,33 +292,61 @@ body { background: var(--dark); color: var(--kraft); font-family: 'Space Mono', 
 
 <script>
 // ─────────────────────────────────────────────────
-//  CONFIGURACIÓN
+//  ⚠ CONFIGURACIÓN — CAMBIA ESTOS VALORES
 // ─────────────────────────────────────────────────
-const ADMIN_PASSWORD  = 'hola21'; // Cambia esta clave
+const ADMIN_PASSWORD    = 'hola21';                                // ← Cambia la clave
+const SUPABASE_URL      = 'https://sumhowyoumntoftlrjho.supabase.co';    // ← Pega tu URL
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1bWhvd3lvdW1udG9mdGxyamhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2OTExMjEsImV4cCI6MjA4NzI2NzEyMX0.w2gAfTHJKsuY61MQChF0VbUT4t3RUt1br-U97M5Gb1M';                          // ← Pega tu anon key
 
 // ─────────────────────────────────────────────────
-//  SISTEMA DE ALMACENAMIENTO LOCAL
+//  CLIENTE SUPABASE
 // ─────────────────────────────────────────────────
-const Storage = {
-  get(key) {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
+const DB = {
+  headers: {
+    'Content-Type':  'application/json',
+    'apikey':        SUPABASE_ANON_KEY,
+    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    'Prefer':        'return=representation'
   },
-  set(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+
+  async getAll(table, options = {}) {
+    let url = `${SUPABASE_URL}/rest/v1/${table}?order=created_at.desc`;
+    if (options.filter) url += `&${options.filter}`;
+    const res = await fetch(url, { headers: this.headers });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
   },
-  add(key, item) {
-    const data = this.get(key);
-    const newItem = { ...item, id: Date.now().toString(), created_at: new Date().toISOString() };
-    data.unshift(newItem);
-    this.set(key, data);
-    return newItem;
+
+  async insert(table, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method:  'POST',
+      headers: this.headers,
+      body:    JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const result = await res.json();
+    return Array.isArray(result) ? result[0] : result;
   },
-  delete(key, id) {
-    const data = this.get(key).filter(item => item.id !== id);
-    this.set(key, data);
+
+  async delete(table, id) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+      method:  'DELETE',
+      headers: this.headers
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return true;
   }
 };
+
+// ─────────────────────────────────────────────────
+//  VERIFICAR CONFIGURACIÓN
+// ─────────────────────────────────────────────────
+function isConfigured() {
+  return !SUPABASE_URL.includes('TU_PROJECT_ID') && !SUPABASE_ANON_KEY.includes('TU_ANON_KEY');
+}
 
 // ─────────────────────────────────────────────────
 //  LOGIN
@@ -327,8 +359,11 @@ document.getElementById('login-pass').addEventListener('keydown', e => {
 function attemptLogin() {
   const pass = document.getElementById('login-pass').value;
   if (pass === ADMIN_PASSWORD) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('login-screen').style.display  = 'none';
+    document.getElementById('admin-panel').style.display   = 'block';
+    if (!isConfigured()) {
+      document.getElementById('config-warning').style.display = 'block';
+    }
     loadNoticias();
     loadInscritos();
     loadMensajes();
@@ -339,7 +374,7 @@ function attemptLogin() {
 }
 
 document.getElementById('admin-logout').addEventListener('click', () => {
-  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('admin-panel').style.display  = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-pass').value = '';
 });
@@ -359,150 +394,164 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
 // ─────────────────────────────────────────────────
 //  NOTICIAS
 // ─────────────────────────────────────────────────
-function loadNoticias() {
+async function loadNoticias() {
   const tbody = document.getElementById('noticias-tbody');
   tbody.innerHTML = '<tr><td colspan="5" class="table-loading">Cargando…</td></tr>';
-  
-  const data = Storage.get('noticias');
-  
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No hay noticias publicadas aún.</td></tr>';
-    return;
+  try {
+    const data = await DB.getAll('noticias');
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No hay noticias publicadas aún.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(n => `
+      <tr>
+        <td><strong>${escHtml(n.titulo)}</strong></td>
+        <td><span class="tag-badge tag-${n.tipo}">${n.tipo}</span></td>
+        <td style="max-width:320px;white-space:pre-wrap;word-break:break-word;font-size:0.72rem;color:#9CA3AF">${escHtml((n.contenido||'').substring(0,120))}${(n.contenido||'').length > 120 ? '…' : ''}</td>
+        <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(n.created_at)}</td>
+        <td><button class="btn-delete" onclick="deleteNoticia('${n.id}')">Borrar</button></td>
+      </tr>`).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="5" class="table-empty" style="color:#FCA5A5;">Error al cargar: ${err.message}</td></tr>`;
   }
-  
-  tbody.innerHTML = data.map(n => `
-    <tr>
-      <td><strong>${escHtml(n.titulo)}</strong></td>
-      <td><span class="tag-badge tag-${n.tipo}">${n.tipo}</span></td>
-      <td style="max-width:320px;white-space:pre-wrap;word-break:break-word;font-size:0.72rem;color:#9CA3AF">${escHtml(n.contenido.substring(0,120))}${n.contenido.length > 120 ? '…' : ''}</td>
-      <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(n.created_at)}</td>
-      <td><button class="btn-delete" onclick="deleteNoticia('${n.id}')">Borrar</button></td>
-    </tr>`).join('');
 }
 
-document.getElementById('btn-publicar').addEventListener('click', () => {
+document.getElementById('btn-publicar').addEventListener('click', async () => {
   const titulo    = document.getElementById('noticia-titulo').value.trim();
   const contenido = document.getElementById('noticia-contenido').value.trim();
   const tipo      = document.getElementById('noticia-tipo').value;
   const succEl    = document.getElementById('noticia-success');
   const errEl     = document.getElementById('noticia-error');
+  const btn       = document.getElementById('btn-publicar');
   succEl.style.display = errEl.style.display = 'none';
-  
+
   if (!titulo || !contenido) {
-    errEl.textContent = '⚠ Título y contenido son obligatorios.';
-    errEl.style.display = 'block';
+    errEl.textContent    = '⚠ Título y contenido son obligatorios.';
+    errEl.style.display  = 'block';
     return;
   }
-  
+
+  btn.disabled     = true;
+  btn.textContent  = 'PUBLICANDO…';
+
   try {
-    Storage.add('noticias', { titulo, contenido, tipo });
+    await DB.insert('noticias', { titulo, contenido, tipo });
     succEl.style.display = 'block';
-    document.getElementById('noticia-titulo').value = '';
+    document.getElementById('noticia-titulo').value    = '';
     document.getElementById('noticia-contenido').value = '';
     loadNoticias();
-    
-    // Disparar evento para actualizar la página principal si está abierta
-    window.dispatchEvent(new Event('storage'));
-  } catch (error) {
-    errEl.textContent = '⚠ Error al publicar.';
+  } catch (err) {
+    errEl.textContent   = `⚠ Error al publicar: ${err.message}`;
     errEl.style.display = 'block';
+  } finally {
+    btn.disabled    = false;
+    btn.textContent = 'PUBLICAR ANUNCIO';
   }
 });
 
 document.getElementById('btn-limpiar-noticia').addEventListener('click', () => {
-  document.getElementById('noticia-titulo').value = '';
+  document.getElementById('noticia-titulo').value    = '';
   document.getElementById('noticia-contenido').value = '';
   document.getElementById('noticia-success').style.display = 'none';
-  document.getElementById('noticia-error').style.display = 'none';
+  document.getElementById('noticia-error').style.display   = 'none';
 });
 
-window.deleteNoticia = (id) => {
+window.deleteNoticia = async (id) => {
   if (!confirm('¿Borrar este anuncio?')) return;
-  Storage.delete('noticias', id);
-  loadNoticias();
-  window.dispatchEvent(new Event('storage'));
+  try {
+    await DB.delete('noticias', id);
+    loadNoticias();
+  } catch (err) {
+    alert(`Error al borrar: ${err.message}`);
+  }
 };
 
 // ─────────────────────────────────────────────────
 //  INSCRITOS
 // ─────────────────────────────────────────────────
 let inscritosData = [];
-function loadInscritos() {
+
+async function loadInscritos() {
   const tbody = document.getElementById('inscritos-tbody');
   tbody.innerHTML = '<tr><td colspan="7" class="table-loading">Cargando…</td></tr>';
-  
-  const data = Storage.get('inscripciones');
-  inscritosData = data;
-  
-  document.getElementById('stat-total').textContent = data.length;
-  document.getElementById('stat-damas').textContent = data.filter(d => d.categoria === 'damas').length;
-  document.getElementById('stat-adultos').textContent = data.filter(d => d.categoria === 'adultos').length;
-  document.getElementById('stat-escuela').textContent = data.filter(d => d.categoria === 'escuela').length;
-  
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="7" class="table-empty">No hay inscritos aún.</td></tr>';
-    return;
+  try {
+    const data = await DB.getAll('inscripciones');
+    inscritosData = data;
+
+    document.getElementById('stat-total').textContent   = data.length;
+    document.getElementById('stat-damas').textContent   = data.filter(d => d.categoria === 'damas').length;
+    document.getElementById('stat-adultos').textContent = data.filter(d => d.categoria === 'adultos').length;
+    document.getElementById('stat-escuela').textContent = data.filter(d => d.categoria === 'escuela').length;
+
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="table-empty">No hay inscritos aún.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(i => `
+      <tr>
+        <td><strong>${escHtml(i.nombre)}</strong></td>
+        <td style="font-size:0.72rem;">${escHtml(i.apoderado_nombre || '—')}</td>
+        <td style="font-size:0.72rem;">${escHtml(i.apoderado_telefono || '—')}</td>
+        <td><span class="tag-badge tag-general">${i.categoria}</span></td>
+        <td style="font-size:0.72rem;">${i.fecha_nac || '—'}</td>
+        <td style="font-size:0.72rem;">${i.genero || '—'}</td>
+        <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(i.created_at)}</td>
+      </tr>`).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" class="table-empty" style="color:#FCA5A5;">Error al cargar: ${err.message}</td></tr>`;
   }
-  
-  tbody.innerHTML = data.map(i => `
-    <tr>
-      <td><strong>${escHtml(i.nombre)}</strong></td>
-      <td style="font-size:0.72rem;">${escHtml(i.apoderado_nombre || '—')}</td>
-      <td style="font-size:0.72rem;">${escHtml(i.apoderado_telefono || '—')}</td>
-      <td><span class="tag-badge tag-general">${i.categoria}</span></td>
-      <td style="font-size:0.72rem;">${i.fecha_nac || '—'}</td>
-      <td style="font-size:0.72rem;">${i.genero || '—'}</td>
-      <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(i.created_at)}</td>
-    </tr>`).join('');
 }
 
 document.getElementById('btn-export-csv').addEventListener('click', () => {
   if (!inscritosData.length) return;
   const headers = ['Nombre','Apoderado','Teléfono Apoderado','Categoría','Fecha Nac','Género','Fecha Inscripción'];
   const rows = inscritosData.map(i => [
-    i.nombre, 
-    i.apoderado_nombre || '', 
-    i.apoderado_telefono || '', 
-    i.categoria, 
-    i.fecha_nac, 
-    i.genero, 
-    fmtDate(i.created_at)
+    i.nombre, i.apoderado_nombre || '', i.apoderado_telefono || '',
+    i.categoria, i.fecha_nac, i.genero, fmtDate(i.created_at)
   ]);
-  const csv = [headers, ...rows].map(r => r.map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(',')).join('\n');
+  const csv = [headers, ...rows]
+    .map(r => r.map(v => `"${(v||'').toString().replace(/"/g,'""')}"`).join(','))
+    .join('\n');
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'inscritos_nova_volley.csv'; a.click();
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'inscritos_nova_volley.csv'; a.click();
   URL.revokeObjectURL(url);
 });
 
 // ─────────────────────────────────────────────────
 //  MENSAJES
 // ─────────────────────────────────────────────────
-function loadMensajes() {
+async function loadMensajes() {
   const tbody = document.getElementById('mensajes-tbody');
   tbody.innerHTML = '<tr><td colspan="5" class="table-loading">Cargando…</td></tr>';
-  
-  const data = Storage.get('mensajes');
-  
-  if (!data.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No hay mensajes aún.</td></tr>';
-    return;
+  try {
+    const data = await DB.getAll('mensajes');
+    if (!data.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="table-empty">No hay mensajes aún.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(m => `
+      <tr>
+        <td><strong>${escHtml(m.nombre)}</strong></td>
+        <td style="font-size:0.72rem;">${escHtml(m.email)}</td>
+        <td style="max-width:340px;white-space:pre-wrap;word-break:break-word;font-size:0.72rem;color:#9CA3AF">${escHtml(m.mensaje)}</td>
+        <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(m.created_at)}</td>
+        <td><button class="btn-delete" onclick="deleteMensaje('${m.id}')">Borrar</button></td>
+      </tr>`).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="5" class="table-empty" style="color:#FCA5A5;">Error al cargar: ${err.message}</td></tr>`;
   }
-  
-  tbody.innerHTML = data.map(m => `
-    <tr>
-      <td><strong>${escHtml(m.nombre)}</strong></td>
-      <td style="font-size:0.72rem;">${escHtml(m.email)}</td>
-      <td style="max-width:340px;white-space:pre-wrap;word-break:break-word;font-size:0.72rem;color:#9CA3AF">${escHtml(m.mensaje)}</td>
-      <td style="white-space:nowrap;font-size:0.72rem;">${fmtDate(m.created_at)}</td>
-      <td><button class="btn-delete" onclick="deleteMensaje('${m.id}')">Borrar</button></td>
-    </tr>`).join('');
 }
 
-window.deleteMensaje = (id) => {
+window.deleteMensaje = async (id) => {
   if (!confirm('¿Borrar este mensaje?')) return;
-  Storage.delete('mensajes', id);
-  loadMensajes();
+  try {
+    await DB.delete('mensajes', id);
+    loadMensajes();
+  } catch (err) {
+    alert(`Error al borrar: ${err.message}`);
+  }
 };
 
 // ─────────────────────────────────────────────────
@@ -510,7 +559,9 @@ window.deleteMensaje = (id) => {
 // ─────────────────────────────────────────────────
 function escHtml(str) {
   if (!str) return '';
-  return str.toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return str.toString()
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function fmtDate(iso) {
   if (!iso) return '—';
