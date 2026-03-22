@@ -477,9 +477,9 @@ const DB = {
     horarios: {
       keywords: ['horario','cuando','dia','dias','hora','horas','schedule','lunes','martes','miercoles','jueves','viernes','sabado','domingo','que dia','a que hora','cuanto tiempo','duracion'],
       variations: [
-        '⏰ <strong>Horarios de Nova Volley:</strong><br><br>• <b>Damas:</b> Martes y Jueves de 18:00 a 19:30<br>• <b>Adultos (varones):</b> Lunes a Jueves de 19:30 a 21:00<br>• <b>Escuela (niños y niñas):</b> Consulta disponibilidad directamente<br><br>📍 San Isidro 886, Santiago Centro',
-        'Tenemos clases <b>de lunes a jueves</b>. Las damas entrenan martes y jueves de 18:00 a 19:30, los adultos de lunes a jueves de 19:30 a 21:00, y para la escuela puedes consultar los horarios disponibles. 📅',
-        'Nuestros entrenamientos son:<br>🏐 <b>Damas:</b> Mar/Jue 18:00-19:30<br>🏐 <b>Adultos:</b> Lun-Jue 19:30-21:00<br>🏐 <b>Escuela:</b> Horarios a consultar'
+        '<strong>Horarios de Nova Volley:</strong><br><br>• <b>Mixto Sub10-12 y Damas Sub14-16:</b> Lunes y miércoles de 18:00 a 19:45<br>• <b>Varones Sub14-16:</b> Martes y Jueves de 18:00 a 19:45<br>• <b>Adultos Damas:</b> Lunes y miércoles de 19:30 a 21:45<br>• <b>Adultos Varones:</b> Martes y Jueves de 19:30 a 21:45<br><br>📍 San Isidro 886, Santiago Centro',
+        'Tenemos clases <b>de lunes a jueves</b>. El grupo mixto Sub10-12 y Damas Sub14-16 entrenan lunes y miércoles de 18:00 a 19:45, y los Varones Sub14-16 martes y jueves en el mismo horario. Los adultos entrenan de 19:30 a 21:45 (damas los lunes y miércoles, y varones los martes y jueves). 📅',
+        'Nuestros entrenamientos son:<br>🏐 <b>Mixto Sub10-12 y Damas Sub14-16:</b> Lun/Mié 18:00-19:45<br>🏐 <b>Varones Sub14-16:</b> Mar/Jue 18:00-19:45<br>🏐 <b>Adultos Damas:</b> Lun/Mié 19:30-21:45<br>🏐 <b>Adultos Varones:</b> Mar/Jue 19:30-21:45'
       ]
     },
     damas: {
