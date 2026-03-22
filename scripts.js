@@ -222,18 +222,18 @@ const DB = {
   const catData = {
     damas: {
       title: 'DAMAS',
-      text: 'Voleibol femenino de alta energía. Entrenamientos técnicos y tácticos para todos los niveles. Desarrolla tus habilidades en un ambiente motivador y competitivo.',
-      horario: 'MAR & JUE — 18:00 a 19:30'
+      text: 'Voleibol femenino de alta energía. Entrenamientos técnicos y tácticos para todos los niveles: Sub14-16 (18:00 hrs) y Adultas (19:30 hrs). Desarrolla tus habilidades en un ambiente motivador y competitivo.',
+      horario: 'LUN & MIÉ — 18:00 a 21:45'
     },
-    varones: {
+  varones: {
       title: 'VARONES',
-      text: 'Equipo masculino con foco en técnica, potencia y juego en equipo. Entrenadores certificados para llevar tu juego al siguiente nivel.',
-      horario: 'LUN A JUE — 19:30 a 21:00'
+      text: 'Equipo masculino con foco en técnica, potencia y juego en equipo. Contamos con bloque Juvenil Sub14-16 y bloque Adultos para todos los niveles.',
+      horario: 'MAR & JUE — 18:00 a 21:45'
     },
     escuela: {
-      title: 'ESCUELA',
-      text: 'Formación deportiva para niñas y niños desde 8 años. Aprenden los fundamentos del voleibol en un espacio seguro, divertido y motivador.',
-      horario: 'CONSULTAR HORARIOS'
+      title: 'ESCUELA (MIXTO)',
+      text: 'Formación deportiva para niñas y niños (Sub10-12). Aprenden los fundamentos del voleibol en un espacio seguro, divertido y motivador.',
+      horario: 'LUN & MIÉ — 18:00 a 19:45'
     }
   };
 
